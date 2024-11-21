@@ -1,0 +1,56 @@
+-- THINGS TO MENTION --
+
+1) Introduction
+2) Chip-firing on basic graphs
+3) Sandpile models
+4) Chip-firing on Euclidean tilings of the plane
+5) Introduction to Hyperbolic geometry and group theory
+6) Hyperbolic tilings
+7) Playing chip-firing on the hyperbolic tilings
+8) Why might we find something different
+9) Unsolvability of the word problem
+10) Where next
+
+-- DRAFT SCRIPT --
+
+This project explores the potential combination of two interesting concepts in mathematics, being the chip-firing game, and hyperbolic tilings.
+
+Suppose we have a finite, undirected, weighted graph, where the value of each node is non-negative. We can imagine that the value of the node can mean the number of 'chips' currently placed at that position. A node will 'fire' it's chips when the value at a node is greater than or equal to the number of nodes it shares an edge with. When a node fires, it will transfer some of it's chips to each of it's neighbours in such a way that each neighbour receives an equal number, and that the value of the node firing remains non-negative. The number of chips fired can be calculated as follows: let x be the number of chips currently held at a node, and n be how many neighbours the node has. The total number of chips fired will be f = x - (x mod n), and each neighbour will receive f/n chips.
+
+(insert pictures of graphs playing the chip-firing game)
+
+We can extend this idea to infinite graphs that can then map onto a tiling of the plane. Suppose we have a graph such that every node has four edges each connecting to adjacent nodes, with this graph extending forever. We can observe how this graph represents a square tiling pattern, where each node represents a tile, and each edge represents the connection to the square tiles next to it.
+
+(insert pictures demonstrating the graph and tiles being equivalent)
+
+Now, if we place a large quantity of chips on a single tile while leaving all other tiles with no chips, we get a special case of something called a "sandpile model", whereby the tile with cause all the chips will "topple", and the chip-firing game is played until all the chips have been spread out. Something fascinating happens when we look at the patterns that emerge from this process, however. If we give each tile a colour based on the number of chips left on it after the sandpile topples, then we can observe incredible fractal patterns, that become more detailed the more chips we use.
+
+(include demonstration of patterns created on square tilings) (include JavaScript program?)
+
+Now, we explore hyperbolic geometry.
+
+Unlike previously, where we have been working with flat planes and Euclidean tilings, hyperbolic geometry is a non-Euclidean geometry that explores the properties of spaces with constant negative curvature. In Euclidean geometry, the parallel postulate states that given a line and a point not on the line, exactly one parallel line can be drawn through this point. Hyperbolic geometry meanwhile allows for an infinite number of parallel lines through such a point. By removing this postulate from our rule set, we get a new structure of geometry that allows for unique mathematical ideas that would be impossible in normal Euclidean geometry.
+
+(demonstration of parallel lines in Euclidean vs hyperbolic geometry)
+
+Distances and shapes behave differently in Hyperbolic space than in Euclidean space, such as the angles of a triangle summing to less than 180 degrees, with the lines and curves of triangles bending in ways that can seem counterintuitive. The most commonly visualized model of hyperbolic geometry, and the one used throughout this project, is the Poincaré disc model, whereby the entire infinite hyperbolic plane is represented within a finite "unit" disc with the boundary representing points at infinity, and "straight lines" appearing as arcs of circles that intersect the boundary of the disc at right angles. These "straight lines" are known as geodesics, the shortest path between two points on the arc in the plane.
+
+(showcase triangles in the Poincaré disc, including the JavaScript program)
+
+Similarly to how we can tile the Euclidean plane with regular polygons like squares, triangles, and hexagons, we can also tile the hyperbolic plane with regular polygons. However, due to the negative curvature of hyperbolic space, these tilings will have slightly different properties. In the hyperbolic plane, it's possible to have tilings with many polygons meeting at each vertex, much more than is possible in a Euclidean tiling.
+
+For example, while you can only fit six equilateral triangles around a point in the Euclidean plane, you can fit more than six triangles around a point in the hyperbolic plane. These hyperbolic tilings are often denoted by the Schläfli symbol {p,q}, where p represents the number of sides of each polygon and q the number of polygons meeting at each vertex.
+
+(include representations of hyperbolic tilings)
+
+Understanding the structure of hyperbolic tilings, and the way we can traverse and label all of the tilings, can be done using group theory.
+
+An 'isometry' in the context of hyperbolic tilings is a distance preserving transformation that will preserve the "size" and "shape" of a tile within the hyperbolic plane. An example of an isometry in Euclidean space could be a reflection or a translation of a tile. A similar principle is applied to the hyperbolic plane, making rotations, reflections, and translations isometries here.
+
+A group that describes all the transformations that can be applied to the tiling while leaving it unchanged is known as a symmetry group. In particular, when we want to describe hyperbolic tilings, the symmetry groups are known as Fuchsian groups; discrete subgroups of the isometries of the hyperbolic plane that map on to the tiling. Each element of a Fuchsian group will correspond to an isometry of some kind. We can utilise this to understand how to generate a hyperbolic tiling for ourselves: if we start with a single tile, we can apply the reflection action across each of its geodesic edges to produce a new tile that will be adjacent to the original. We can carry on repeating this process for each new tile created to generate the full tiling of the plane.
+
+Now that we have a background understanding of both chip-firing and hyperbolic tilings, we can begin to ask what would we expect to see if we played the chip-firing game on these hyperbolic tilings. For simplicity, we shall focus our question on what happens on the {3,7} tiling, a tiling made up of hyperbolic triangles with seven triangles at each vertex.
+
+A natural question to ask at this point is why we might want to play the chip-firing game on hyperbolic tilings in the first place. There are a few reasons to suggest we might end up seeing a different kind of pattern or result on the hyperbolic tilings over the Euclidean tilings. One of the biggest reasons is the spread of the chips as we move further from the centre of the initial topple. In a Euclidean tiling, the chips will spread relatively evenly because the number of tiles increases linearly with distance away from the centre. However, in a hyperbolic tiling, this is not the case. We may expect to find that the chips will spread more rapidly, because the number of tiles increases exponentially away from the centre.
+
+The difficulty of this problem becomes clear when we attempt to program an algorithm to play this chip-firing game. 

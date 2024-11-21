@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+		</script>
+		<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: [['$', '$'], ['\\(', '\\)']]
+			}
+		};
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/addons/p5.sound.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<meta charset="utf-8" />
+		<title>Chip-firing on hyperbolic tilings</title>
+		<link rel="stylesheet" type="text/css" href="design.css">
+	</head>
+	<body>
+		<figure>
+			<img src="images/UOSLogo_Primary_MidnightBlack_RGB.png" width="36%" height="auto" alt="University Logo" />
+			<img src="images/SURE logo (transparent background).png" width="30%" height="auto" alt="SURE Logo" />
+		</figure>
+		<h1>
+			SURE Project 2024 - Chip-firing on hyperbolic tilings
+		</h1>
+		<h2>
+			By Harry Tomkins and Dr Paul Johnson
+		</h2>
+		<h3>
+			Outline
+		</h3>
+		<p>
+			This project focusses on attempting to combine two mathematical concepts, being the chip-firing game and hyperbolic tilings. There appears to be only a small amount of past research discussing this topic, making the question of what would happen if we combined them all the more interesting. This website is intended to take you through the journey I explored during my time on this project, and all the fascinating mathematics that came along with it.
+		</p>
+		<h3>
+			About chip-firing
+		</h3>
+		<p>
+			Suppose we have a finite, undirected, weighted graph, where the value of each node is non-negative. We can imagine that the value of the node can mean the number of 'chips' currently placed at that position. A node will 'fire' it's chips when the value at a node is greater than or equal to the number of nodes it shares an edge with. When a node fires, it will transfer some of it's chips to each of it's neighbours in such a way that each neighbour receives an equal number, and that the value of the node firing remains non-negative. The number of chips fired can be calculated as follows: let $x$ be the number of chips currently held at a node, and $n$ be how many neighbours the node has. The total number of chips fired will be $f = x - (x \mod n)$, and each neighbour will receive $\frac{f}{n}$ chips.
+		</p>
+		<figure>
+			<img src="images/Chip_firing_game_example_sequence.svg" width="100%" />
+			<figcaption>
+				By <a href="https://commons.wikimedia.org/wiki/User:Cmglee" title="User:Cmglee">Cmglee</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=129713684">Link</a>. Graph sequence showing the chip-firing game being played.
+			</figcaption>
+		</figure>
+		<p>
+			We can extend this idea to infinite graphs that can then map onto a tiling of the plane. Suppose we have a graph such that every node has four edges each connecting to adjacent nodes, with this graph extending forever. We can observe how this graph represents a square tiling pattern, where each node represents a tile, and each edge represents the connection to the square tiles next to it.
+		</p>
+		<figure>
+			<img src="images/Lattice_of_squares.svg" width="100%" />
+			<figcaption>
+				By <a href="https://commons.wikimedia.org/wiki/User:Daniel_Maak" title="User:Daniel Maak">Daniel Maak</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" title="Creative Commons Zero, Public Domain Dedication">CC0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=146655652">Link</a>. The square tiling.
+			</figcaption>
+		</figure>
+		<p>
+			Now, if we place a large quantity of chips on a single tile while leaving all other tiles with no chips, we get a special case of something called a "sandpile model", whereby the tile with cause all the chips will "topple", and the chip-firing game is played until all the chips have been spread out. Something fascinating happens when we look at the patterns that emerge from this process, however. If we give each tile a colour based on the number of chips left on it after the sandpile topples, then we can observe incredible fractal patterns, that become more detailed the more chips we use.
+		</p>
+		<figure>
+			<img src="images/firstchipfire.png" width="80%" />
+			<figcaption>
+				By Harry Tomkins. Result of chip-firing on the square tiling by placing 27125 chips at the centre. Light blue represents tiles with no chips, green with 1 chip, yellow with 2 chips, and orange with 3 chips.
+			</figcaption>
+		</figure>
+		<figure>
+			<img src="images/Sandpile_on_infinite_grid,_3e7_grains.png" width="80%" />
+			<figcaption>
+				By <a href="https://commons.wikimedia.org/w/index.php?title=User:Colt_browning&amp;action=edit&amp;redlink=1" class="new" title="User:Colt browning (page does not exist)">colt_browning</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by/4.0" title="Creative Commons Attribution 4.0">CC BY 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=83874212">Link</a>. Result of chip-firing on the square tiling by placing 30 million chips at the centre. White represents tiles with no chips, green with 1 chip, purple with 2 chips, and gold with 3 chips.
+			</figcaption>
+		</figure>
+		<h3>
+			About Hyperbolic tilings
+		</h3>
+		<p>
+			Unlike previously, where we have been working with flat planes and Euclidean tilings, hyperbolic geometry is a non-Euclidean geometry that explores the properties of spaces with constant negative curvature. In Euclidean geometry, the parallel postulate states that given a line and a point not on the line, exactly one parallel line can be drawn through this point. Hyperbolic geometry meanwhile allows for an infinite number of parallel lines through such a point. By removing this postulate from our rule set, we get a new structure of geometry that allows for unique mathematical ideas that would be impossible in normal Euclidean geometry.
+		</p>
+		<p>
+			Distances and shapes behave differently in Hyperbolic space compared to Euclidean space, such as the angles of a triangle summing to less than $\pi$ radians, or $180^{\circ}$, with the lines and curves of triangles bending in ways that can seem counterintuitive. The most commonly visualized model of hyperbolic geometry, and the one used throughout this project, is the Poincaré disc model, whereby the entire infinite hyperbolic plane is represented within a finite "unit" disc with the boundary representing points at infinity, and "straight lines" appearing as arcs of circles that intersect the boundary of the disc at right angles. These "straight lines" are known as geodesics, the shortest path between two points on the arc in the plane.
+		</p>
+		<figure>
+			<img src="images/Droites_disquePoincare.svg" width="80%" />
+			<figcaption>
+				By <a href="https://commons.wikimedia.org/wiki/User:Jean-Christophe_BENOIST" title="User:Jean-Christophe BENOIST">Jean-Christophe BENOIST</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by/3.0" title="Creative Commons Attribution 3.0">CC BY 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=5067499">Link</a>. Diagram showcasing three geodesic lines in the Poincaré disc.
+			</figcaption>
+		</figure>
+		<p>
+			Similarly to how we can tile the Euclidean plane with regular polygons like squares, triangles, and hexagons, we can also tile the hyperbolic plane with regular polygons. However, due to the negative curvature of hyperbolic space, these tilings will have slightly different properties. In the hyperbolic plane, it's possible to have tilings with many polygons meeting at each vertex, much more than is possible in a Euclidean tiling.
+		</p>
+		<p>
+			For example, while you can only fit six equilateral triangles around a point in the Euclidean plane, you can fit more than six triangles around a point in the hyperbolic plane. These hyperbolic tilings are often denoted by the Schläfli symbol $\{p,q\}$, where $p$ represents the number of sides of each polygon and $q$ the number of polygons meeting at each vertex.
+		</p>
+		<figure>
+			<img src="images/Order-7_triangular_tiling.svg" width="80%" />
+			<figcaption>
+				By <a href="https://commons.wikimedia.org/wiki/User:Parcly_Taxel" title="User:Parcly Taxel">Parcly Taxel</a> - <span class="int-own-work" lang="en">Own work</span>, Public Domain, <a href="https://commons.wikimedia.org/w/index.php?curid=69867434">Link</a>. The $\{3,7\}$ tiling of the hyperbolic plane as seen in the Poincaré disc.
+			</figcaption>
+		</figure>
+		<p>
+			Understanding the structure of hyperbolic tilings, and the way we can traverse and label all of the tilings, can be done using group theory.
+		</p>
+		<p>
+			An 'isometry' in the context of hyperbolic tilings is a distance preserving transformation that will preserve the "size" and "shape" of a tile within the hyperbolic plane. An example of an isometry in Euclidean space could be a reflection or a translation of a tile. A similar principle is applied to the hyperbolic plane, making rotations, reflections, and translations isometries here.
+		</p>
+		<p>
+			A group that describes all the transformations that can be applied to the tiling while leaving it unchanged is known as a symmetry group. In particular, when we want to describe hyperbolic tilings, the symmetry groups are known as Fuchsian groups; discrete subgroups of the isometries of the hyperbolic plane that map on to the tiling. Each element of a Fuchsian group will correspond to an isometry of some kind. We can utilise this to understand how to generate a hyperbolic tiling for ourselves: if we start with a single tile, we can apply the reflection action across each of its geodesic edges to produce a new tile that will be adjacent to the original. We can carry on repeating this process for each new tile created to generate the full tiling of the plane.
+		</p>
+		<p>
+			At the bottom of the page, you can find a button that makes a JavaScript generated tiling for an approximation of the $\{3,7\}$ tiling using the above method.
+		</p>
+		<p>
+			<div class="tiling" height="100%">
+				<script src='sketch.js'></script>
+			</div>
+		</p>
+		<h3>
+			Chip-firing on Hyperbolic tilings
+		</h3>
+		<p>
+			Now that we have a background understanding of both chip-firing and hyperbolic tilings, we can begin to ask what would we expect to see if we played the chip-firing game on these hyperbolic tilings. For simplicity, we shall focus our question on what happens on the $\{3,7\}$ tiling, a tiling made up of hyperbolic triangles with seven triangles at each vertex.
+		</p>
+		<p>
+			A natural question to ask at this point is why we might want to play the chip-firing game on hyperbolic tilings in the first place. There are a few reasons to suggest we might end up seeing a different kind of pattern or result on the hyperbolic tilings over the Euclidean tilings. One of the biggest reasons is the spread of the chips as we move further from the centre of the initial topple. In a Euclidean tiling, the chips will spread relatively evenly because the number of tiles increases linearly with distance away from the centre. However, in a hyperbolic tiling, this is not the case. We may expect to find that the chips will spread more rapidly, because the number of tiles increases exponentially away from the centre.
+		</p>
+		<p>
+			There were many challenges in creating the chip-firing game to play on the hyperbolic tilings however. A major challenge to overcome in creating an algorithm to play the game in this setting is finding a way to keep track of the tilings in some way and the number of chips on each tile. Using the group theory from above, we can find names for each tile by naming each one the sequence of isometries that it takes the centre tile to reach the tile in question. However, this method ends up generating multiple names for each tile, and finding a way to compare names and check if different names lead to the same tile is a notably difficult task. This is even an intractable problem in most cases of non-hyperbolic groups, and is known as the "word problem", due to the nature of the problem involving comparing the names of the tiles that we call "words".
+		</p>
+		<p>
+			Because of the difficulties involved in solving the word problem in the JavaScript programming language I was using, we were unsuccessful in attempting to create a fully functioning algorithm to play this game on a large enough scope. However, in future work there are some potential ways foward to progress past this problem. Notably, we could use a computer algebra system (CAS) algorithm that is able to successfully compare words, then create a dictionary of tile names and chip numbers that solves the problem of keeping track of the tiles.
+		</p>
+		<h3>
+			Notes
+		</h3>
+		<p>
+			University of Sheffield SURE project as part of the <a href="https://www.sheffield.ac.uk/mps" target="_blank">School of Mathematical and Physical Sciences</a>.
+		</p>
+		<h3>
+			Bibliography
+		</h3>
+		<ol>
+			<li><cite>Beardon, A.F. (2012) The Geometry of Discrete Groups. Springer.</cite></li>
+			<li><cite>Anderson, J.W. (2005) Hyperbolic Geometry. Éditeur: London: Springer-Verlag London Limited.</cite></li>
+			<li><cite>Singer, D.A. (1998) Geometry : plane and fancy. New York: Springer.</cite></li>
+			<li><cite>Clay, M. and Margalit, D. (2017) Office hours with a geometric group theorist. Princeton, New Jersey: Princeton University Press.</cite></li>
+			<li><cite>Abelian sandpile model (2023) Wikipedia. Available at: <a href="https://en.wikipedia.org/wiki/Abelian_sandpile_model" target="_blank">https://en.wikipedia.org/wiki/Abelian_sandpile_model</a>.</cite></li>
+		</ol>
+		<h3>
+			JavaScript tiling
+		</h3>
+		<p>
+			Pressing the button below generates the approximation of the $\{3,7\}$ tiling of the hyperbolic plane.
+		</p>
+	</body>
+</html>
